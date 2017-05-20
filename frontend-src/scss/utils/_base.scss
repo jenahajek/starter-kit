@@ -1,0 +1,76 @@
+// ==========================
+//  BASE
+// ==========================
+//  basic styles for pretty much all the site.
+//  selectors should be only tags
+
+// --------------------------
+// Links
+// --------------------------
+// decide what links are more common (underlined or not?) to avoid
+// unnecessary overriding styles later
+a {
+    color: $link-color;
+    text-decoration: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -moz-font-feature-settings: "liga" on;
+
+    &:hover {
+        color: $link-color--hover;
+    }
+
+    &:focus {
+        color: $link-color--focus;
+    }
+}
+
+// --------------------------
+// Images
+// --------------------------
+img,
+picture {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+// --------------------------
+// Selection
+// --------------------------
+::selection {
+    background: palette(primary);
+    color: $white;
+}
+
+// --------------------------
+// Print styles
+// --------------------------
+@media print {
+    * {
+        // background: none !important; // optional
+        color: black !important; // optional: convert everything to BW, save print colors
+        box-shadow: none !important;
+        text-shadow: none !important;
+
+        /* Images, vectors and such */
+        // filter: gray(); // optional: convert everything to BW, save print colors
+        // filter: grayscale(100%); // optional: convert everything to BW, save print colors
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    // print URL next to the link. Optional
+    a[href]:after {
+        content: ' (' attr(href) ')';
+    }
+
+    // don't print hrefs which don't contain proper URL. Optional
+    a[href="#"],
+    a[href="javascript:"] {
+        content: '';
+    }
+}

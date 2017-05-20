@@ -1,0 +1,164 @@
+// ==========================
+// MIXINS
+// Commonly used mixins
+// ==========================
+
+// --------------------------
+// Breakpoints/tweakpoints manager
+// --------------------------
+// more info: http://www.sitepoint.com/breakpoints-tweakpoints-sass/
+@mixin respond-to($point) {
+    @if map-has-key($tweakpoints, $point) {
+        @media (min-width: map-get($tweakpoints, $point)) {
+            @content;
+        }
+    } @else if map-has-key($breakpoints, $point) {
+        @media (min-width: map-get($breakpoints, $point)) {
+            @content;
+        }
+    }
+    // mixin for retina images
+      @else if $point == retina {
+        @media
+        (min--moz-device-pixel-ratio: 1.3),
+        (-o-min-device-pixel-ratio: 2.6/2),
+        (-webkit-min-device-pixel-ratio: 1.3),
+        (min-device-pixel-ratio: 1.3),
+        (min-resolution: 1.3dppx) {
+          @content;
+        }
+    } @else {
+        @warn "Could not find `#{$breakpoint}` in both local ($tweakpoints) and global ($breakpoints) contexts. Media block omitted.";
+    }
+}
+
+// --------------------------
+// Debugging
+// --------------------------
+// - include to highlight object in browser
+// - handy if you want to check where the rule gets applied
+@mixin debug {
+    background: violet !important;
+    border: 10px solid teal !important;
+}
+
+
+// --------------------------
+// Component wrapper
+// --------------------------
+// - container for tweakpoints (so they don't interfere with other
+//   modules)
+//
+// Example:
+// @include component((
+//   'custom': 500px,
+//   'medium': 1170px,
+// )) {
+    // A lot of Sass rules here, but no `$tweakpoints: ();` at the end of file
+// }
+@mixin component($component-tweakpoints: ()) {
+    $tweakpoints: $component-tweakpoints !global;
+    @content;
+    $tweakpoints: () !global;
+}
+
+
+
+
+
+// --------------------------
+// Clearfix
+// --------------------------
+@mixin clearfix() {
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+
+
+
+// --------------------------
+// media object mixins
+// --------------------------
+// http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
+@mixin media-object {
+  display: flex;
+  align-items: flex-start;
+}
+
+@mixin media-object__body {
+    flex: 1;
+}
+
+@mixin media-object__side {
+    margin-right: $spacing;
+}
+
+// @mixin media-object__right-side {
+//     float: right;
+//     margin-left: $spacing;
+
+//     img {
+//         display: block;
+//     }
+// }
+
+@mixin flag {
+    display: table;
+    width: 100%;
+}
+
+@mixin flag__body {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+}
+
+@mixin flag__side {
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 10px;
+
+    > img {
+        display: block;
+        max-width: none;
+    }
+}
+
+
+
+
+// --------------------------
+// Transition default
+// --------------------------
+// define transition with @include transition;
+//
+// if you need override setting, just specify it as an argument
+// e.g. @include transition(opacity 0.5s ease-out);
+//
+// if you want to choose only specific property to achieve better
+// performance while keeping default timing, use transition-property
+// e.g. @include transition-property(opacity, background);
+// and choose only property you need to transition
+
+@mixin transition($transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1)) {
+    transition: $transition;
+}
+
+@mixin transition-property($property...) {
+          transition-property: $property;
+}
+
+@mixin vishid {
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    padding: 0;
+    margin: -1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+}

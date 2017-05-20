@@ -1,0 +1,5 @@
+node_modules
+frontend-dist
+
+# big uncompressed source images and alike we don't want to version
+frontent-src/_unversioned-source

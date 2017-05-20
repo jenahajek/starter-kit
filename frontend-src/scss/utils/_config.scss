@@ -1,0 +1,160 @@
+// ==========================
+// Config
+// ==========================
+
+// --------------------------
+// Breakpoints
+// --------------------------
+$breakpoints: (
+    'small'  : 40em,
+    'medium' : 52.5em,
+    'large'  : 75em,
+) !default;
+
+
+
+// --------------------------
+// Tweakpoints
+// --------------------------
+// local breakpoints for finer control over individual components
+// for setting variables use mixin `component`
+// more info: http://www.sitepoint.com/breakpoints-tweakpoints-sass/
+$tweakpoints: ();
+
+
+
+// --------------------------
+// Color palette map
+// --------------------------
+// 1. set basic palette
+// 2. set common semantic variables
+// 3. use semantic one only when it makes sense ($border-color for border
+//    property)
+// 4. use directly from palette otherwise (palette(gray, light); for section
+//    background
+//
+// http://erskinedesign.com/blog/friendlier-colour-names-sass-maps/
+$palettes: (
+    primary: (
+        x-light : red,
+        light   : red,
+        base    : red,
+        dark    : red,
+        x-dark  : red
+    ),
+    white: (
+        base        : #fff,
+        transparent : rgba(255, 255, 255, 0.4),
+    ),
+    gray: (
+        x-light : #fdfdfd,
+        light   : #f0f0f0,
+        mid     : #e0e0e0,
+        base    : #999,
+        dark    : #666,
+        x-dark  : #2c2c2c
+    ),
+    black: (
+        light : #444,
+        base  : #222
+    ),
+);
+
+@function palette($palette, $tone: 'base') {
+    @return map-get(map-get($palettes, $palette), $tone);
+}
+
+// --------------------------
+// Neutral shades
+// --------------------------
+$white:     palette(white);
+$black:     palette(black);
+
+// --------------------------
+// Helper colors
+// --------------------------
+$light-background: palette(gray, x-light); // light gray background
+$transparent: rgba(255,255,255, 0.0001); // because of safari
+
+// $error-color: #dd1515;
+// $warning-color: #f7922b;
+// $success-color: palette(green);
+
+// --------------------------
+// Link colors
+// --------------------------
+$link-color: palette(primary);
+$link-color--hover: darken($link-color, 10);
+$link-color--visited: $link-color--hover;
+$link-color--focus: darken($link-color--hover, 10);
+
+
+// --------------------------
+// Type scale map
+// --------------------------
+// 
+// set vertical rhythm https://github.com/markgoodyear/postcss-vertical-rhythm/
+// it needs to be in body and have this syntax
+$vr: 30px;
+
+html,
+body {
+    font-size: 21px;
+}
+
+
+$type-settings: (
+  -1: (
+    font-size: 0.75rem,
+    line-height: 1 * $vr
+  ),
+  0: (
+    font-size: 1rem,
+    line-height: 1 * $vr
+  ),
+  1: (
+    font-size: 1.333rem,
+    line-height: 2 * $vr
+  ),
+  2: (
+    font-size: 1.778rem,
+    line-height: 2 * $vr
+  ),
+  3: (
+    font-size: 2.3686rem,
+    line-height: 3 * $vr
+  )
+
+);
+
+@function type-scale($level) {
+  @return map-get(
+    map-get($type-settings, $level), 'font-size');
+}
+
+@function line-height($level) {
+  @return map-get(
+    map-get($type-settings, $level), 'line-height');
+}
+
+@mixin type-setting($level) {
+  font-size: type-scale($level);
+  line-height: line-height($level);
+}
+
+/* MIXIN */
+
+// --------------------------
+// Spacing
+// --------------------------
+$spacing: 1 * $vr;
+$max-width: 1400px;
+
+$base-line-height: 1* $vr;
+
+
+
+// --------------------------
+// Helpers
+// --------------------------
+$reading-column: 780px;
