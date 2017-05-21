@@ -17,7 +17,7 @@ module.exports = {
     },
     scripts : {
       src        : src + 'js/modules/**/*.js',
-      vendor     : src + 'js/libs/**/*.js',
+      vendor     : src + 'js/vendor/**/*.js',
       dest       : dist + 'js',
       vendorDest : dist + 'js/vendor'
     },

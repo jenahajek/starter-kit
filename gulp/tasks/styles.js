@@ -161,6 +161,6 @@ gulp.task('styles:parker', function() {
 gulp.task('styles:test',
     gulp.parallel( // 1
         'styles:csscss',
-        'styles:parker'm
+        'styles:parker'
     )
 );
